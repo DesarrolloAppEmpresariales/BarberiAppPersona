@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BarberiAppPersona.Repository
 {
-    public class EmpleadoRepository : IEmpleado
+    public class ClienteRepository : ICliente
     {
         readonly DatabaseContext _dbContext = new();
 
-        public EmpleadoRepository(DatabaseContext dbContext)
+        public ClienteRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public List<Empleado> ObtenerListaEmpleados()
+        public List<Cliente> ObtenerListaClientes()
         {
             try
             {
-                return _dbContext.Empleado.ToList();
+                return _dbContext.Cliente.ToList();
             }
             catch
             {
@@ -25,14 +25,14 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public Empleado ObtenerEmpleadoPorId(int id)
+        public Cliente ObtenerClientePorId(int id)
         {
             try
             {
-                Empleado? empleado = _dbContext.Empleado.Find(id);
-                if (empleado != null)
+                Cliente? Cliente = _dbContext.Cliente.Find(id);
+                if (Cliente != null)
                 {
-                    return empleado;
+                    return Cliente;
                 }
                 else
                 {
@@ -45,11 +45,11 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public void CrearEmpleado(Empleado empleado)
+        public void CrearCliente(Cliente Cliente)
         {
             try
             {
-                _dbContext.Empleado.Add(empleado);
+                _dbContext.Cliente.Add(Cliente);
                 _dbContext.SaveChanges();
             }
             catch
@@ -58,11 +58,11 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public void ActualizarEmpleado(Empleado empleado)
+        public void ActualizarCliente(Cliente Cliente)
         {
             try
             {
-                _dbContext.Entry(empleado).State = EntityState.Modified;
+                _dbContext.Entry(Cliente).State = EntityState.Modified;
                 _dbContext.SaveChanges();
             }
             catch
@@ -71,17 +71,17 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public Empleado EliminarEmpleado(int id)
+        public Cliente EliminarCliente(int id)
         {
             try
             {
-                Empleado? empleado = _dbContext.Empleado.Find(id);
+                Cliente? Cliente = _dbContext.Cliente.Find(id);
 
-                if (empleado != null)
+                if (Cliente != null)
                 {
-                    _dbContext.Empleado.Remove(empleado);
+                    _dbContext.Cliente.Remove(Cliente);
                     _dbContext.SaveChanges();
-                    return empleado;
+                    return Cliente;
                 }
                 else
                 {
@@ -94,9 +94,9 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public bool ValidarEmpleado(int id)
+        public bool ValidarCliente(int id)
         {
-            return _dbContext.Empleado.Any(e => e.EmpleadoID == id);
+            return _dbContext.Cliente.Any(e => e.ClienteID == id);
         }
     }
 }

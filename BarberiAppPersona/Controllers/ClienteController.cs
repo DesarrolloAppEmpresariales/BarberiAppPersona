@@ -4,34 +4,34 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BarberiApp.WebApi.Controllers
+namespace BarberiAppPersona.Controllers
 {
     [Authorize]
-    [Route("api/empleado")]
+    [Route("api/cliente")]
     [ApiController]
-    public class EmpleadoController : ControllerBase
+    public class ClienteController : Controller
     {
-        private readonly IEmpleado _IEmpleado;
+        private readonly ICliente _ICliente;
 
-        public EmpleadoController(IEmpleado IEmpleado)
+        public ClienteController(ICliente ICliente)
         {
-            _IEmpleado = IEmpleado;
+            _ICliente = ICliente;
         }
         //Roles (1 'SU') (2 'Admin') (3 'Barbero') (4 'Cliente')     
         // GET: api/employee> 
         [HttpGet]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<IEnumerable<Empleado>>> Get()
+        public async Task<ActionResult<IEnumerable<Cliente>>> Get()
         {
-            return await Task.FromResult(_IEmpleado.ObtenerListaEmpleados());
+            return await Task.FromResult(_ICliente.ObtenerListaClientes());
         }
 
         // GET api/employee/5
         [HttpGet("{id}")]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<Empleado>> Get(int id)
+        public async Task<ActionResult<Cliente>> Get(int id)
         {
-            var employees = await Task.FromResult(_IEmpleado.ObtenerEmpleadoPorId(id));
+            var employees = await Task.FromResult(_ICliente.ObtenerClientePorId(id));
             if (employees == null)
             {
                 return NotFound();
@@ -41,24 +41,24 @@ namespace BarberiApp.WebApi.Controllers
 
         // POST api/employee
         [HttpPost]
-        public async Task<ActionResult<Empleado>> Post(Empleado empleado)
+        public async Task<ActionResult<Cliente>> Post(Cliente Cliente)
         {
-            _IEmpleado.CrearEmpleado(empleado);
-            return await Task.FromResult(empleado);
+            _ICliente.CrearCliente(Cliente);
+            return await Task.FromResult(Cliente);
         }
 
         // PUT api/employee/5
         [HttpPut("{id}")]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<Empleado>> Put(int id, Empleado empleado)
+        public async Task<ActionResult<Cliente>> Put(int id, Cliente Cliente)
         {
-            if (id != empleado.EmpleadoID)
+            if (id != Cliente.ClienteID)
             {
                 return BadRequest();
             }
             try
             {
-                _IEmpleado.ActualizarEmpleado(empleado);
+                _ICliente.ActualizarCliente(Cliente);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,21 +71,21 @@ namespace BarberiApp.WebApi.Controllers
                     throw;
                 }
             }
-            return await Task.FromResult(empleado);
+            return await Task.FromResult(Cliente);
         }
 
         // DELETE api/employee/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<Empleado>> Delete(int id)
+        public async Task<ActionResult<Cliente>> Delete(int id)
         {
-            var empleado = _IEmpleado.EliminarEmpleado(id);
-            return await Task.FromResult(empleado);
+            var Cliente = _ICliente.EliminarCliente(id);
+            return await Task.FromResult(Cliente);
         }
 
         private bool EmployeeExists(int id)
         {
-            return _IEmpleado.ValidarEmpleado(id);
+            return _ICliente.ValidarCliente(id);
         }
     }
 }

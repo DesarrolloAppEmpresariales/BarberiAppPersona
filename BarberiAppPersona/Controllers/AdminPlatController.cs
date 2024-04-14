@@ -4,34 +4,34 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BarberiApp.WebApi.Controllers
+namespace BarberiAppPersona.Controllers
 {
     [Authorize]
-    [Route("api/empleado")]
+    [Route("api/AdminPlat")]
     [ApiController]
-    public class EmpleadoController : ControllerBase
+    public class AdminPlatController : ControllerBase
     {
-        private readonly IEmpleado _IEmpleado;
+        private readonly IAdminPlat _IAdminPlat;
 
-        public EmpleadoController(IEmpleado IEmpleado)
+        public AdminPlatController(IAdminPlat IAdminPlat)
         {
-            _IEmpleado = IEmpleado;
+            _IAdminPlat = IAdminPlat;
         }
         //Roles (1 'SU') (2 'Admin') (3 'Barbero') (4 'Cliente')     
         // GET: api/employee> 
         [HttpGet]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<IEnumerable<Empleado>>> Get()
+        public async Task<ActionResult<IEnumerable<AdminPlat>>> Get()
         {
-            return await Task.FromResult(_IEmpleado.ObtenerListaEmpleados());
+            return await Task.FromResult(_IAdminPlat.ObtenerListaAdminPlats());
         }
 
         // GET api/employee/5
         [HttpGet("{id}")]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<Empleado>> Get(int id)
+        public async Task<ActionResult<AdminPlat>> Get(int id)
         {
-            var employees = await Task.FromResult(_IEmpleado.ObtenerEmpleadoPorId(id));
+            var employees = await Task.FromResult(_IAdminPlat.ObtenerAdminPlatPorId(id));
             if (employees == null)
             {
                 return NotFound();
@@ -41,24 +41,24 @@ namespace BarberiApp.WebApi.Controllers
 
         // POST api/employee
         [HttpPost]
-        public async Task<ActionResult<Empleado>> Post(Empleado empleado)
+        public async Task<ActionResult<AdminPlat>> Post(AdminPlat AdminPlat)
         {
-            _IEmpleado.CrearEmpleado(empleado);
-            return await Task.FromResult(empleado);
+            _IAdminPlat.CrearAdminPlat(AdminPlat);
+            return await Task.FromResult(AdminPlat);
         }
 
         // PUT api/employee/5
         [HttpPut("{id}")]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<Empleado>> Put(int id, Empleado empleado)
+        public async Task<ActionResult<AdminPlat>> Put(int id, AdminPlat AdminPlat)
         {
-            if (id != empleado.EmpleadoID)
+            if (id != AdminPlat.AdminPlatID)
             {
                 return BadRequest();
             }
             try
             {
-                _IEmpleado.ActualizarEmpleado(empleado);
+                _IAdminPlat.ActualizarAdminPlat(AdminPlat);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,21 +71,21 @@ namespace BarberiApp.WebApi.Controllers
                     throw;
                 }
             }
-            return await Task.FromResult(empleado);
+            return await Task.FromResult(AdminPlat);
         }
 
         // DELETE api/employee/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "1, 2")]
-        public async Task<ActionResult<Empleado>> Delete(int id)
+        public async Task<ActionResult<AdminPlat>> Delete(int id)
         {
-            var empleado = _IEmpleado.EliminarEmpleado(id);
-            return await Task.FromResult(empleado);
+            var AdminPlat = _IAdminPlat.EliminarAdminPlat(id);
+            return await Task.FromResult(AdminPlat);
         }
 
         private bool EmployeeExists(int id)
         {
-            return _IEmpleado.ValidarEmpleado(id);
+            return _IAdminPlat.ValidarAdminPlat(id);
         }
     }
 }

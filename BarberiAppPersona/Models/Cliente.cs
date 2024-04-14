@@ -1,8 +1,8 @@
 ﻿namespace BarberiAppPersona.Models
 {
-    public class Empleado
+    public class Cliente
     {
-        public int EmpleadoID { get; set; }
+        public int ClienteID { get; set; }
         public string? Genero { get; set; }
         public string? Cedula { get; set; }
         public string? Nombre { get; set; }

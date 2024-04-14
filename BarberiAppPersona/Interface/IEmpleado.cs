@@ -1,6 +1,6 @@
-﻿using BarberiApp.WebApi.Models;
+﻿using BarberiAppPersona.Models;
 
-namespace BarberiApp.WebApi.Interface
+namespace BarberiAppPersona.Interface
 {
     public interface IEmpleado
     {

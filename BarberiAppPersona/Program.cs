@@ -1,10 +1,9 @@
-using BarberiApp.WebApi.Interface;
-using BarberiApp.WebApi.Models;
-using BarberiApp.WebApi.Repository;
+using BarberiAppPersona.Interface;
+using BarberiAppPersona.Models;
+using BarberiAppPersona.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DatabaseContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("dbConnection")));
 builder.Services.AddTransient<IEmpleado, EmpleadoRepository>();
+builder.Services.AddTransient<ICliente, ClienteRepository>();
+builder.Services.AddTransient<IAdminNeg, AdminNegRepository>();
+builder.Services.AddTransient<IAdminPlat, AdminPlatRepository>();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

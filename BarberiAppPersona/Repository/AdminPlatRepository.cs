@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BarberiAppPersona.Repository
 {
-    public class EmpleadoRepository : IEmpleado
+    public class AdminPlatRepository : IAdminPlat
     {
         readonly DatabaseContext _dbContext = new();
 
-        public EmpleadoRepository(DatabaseContext dbContext)
+        public AdminPlatRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public List<Empleado> ObtenerListaEmpleados()
+        public List<AdminPlat> ObtenerListaAdminPlats()
         {
             try
             {
-                return _dbContext.Empleado.ToList();
+                return _dbContext.AdminPlat.ToList();
             }
             catch
             {
@@ -25,14 +25,14 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public Empleado ObtenerEmpleadoPorId(int id)
+        public AdminPlat ObtenerAdminPlatPorId(int id)
         {
             try
             {
-                Empleado? empleado = _dbContext.Empleado.Find(id);
-                if (empleado != null)
+                AdminPlat? AdminPlat = _dbContext.AdminPlat.Find(id);
+                if (AdminPlat != null)
                 {
-                    return empleado;
+                    return AdminPlat;
                 }
                 else
                 {
@@ -45,11 +45,11 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public void CrearEmpleado(Empleado empleado)
+        public void CrearAdminPlat(AdminPlat AdminPlat)
         {
             try
             {
-                _dbContext.Empleado.Add(empleado);
+                _dbContext.AdminPlat.Add(AdminPlat);
                 _dbContext.SaveChanges();
             }
             catch
@@ -58,11 +58,11 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public void ActualizarEmpleado(Empleado empleado)
+        public void ActualizarAdminPlat(AdminPlat AdminPlat)
         {
             try
             {
-                _dbContext.Entry(empleado).State = EntityState.Modified;
+                _dbContext.Entry(AdminPlat).State = EntityState.Modified;
                 _dbContext.SaveChanges();
             }
             catch
@@ -71,17 +71,17 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public Empleado EliminarEmpleado(int id)
+        public AdminPlat EliminarAdminPlat(int id)
         {
             try
             {
-                Empleado? empleado = _dbContext.Empleado.Find(id);
+                AdminPlat? AdminPlat = _dbContext.AdminPlat.Find(id);
 
-                if (empleado != null)
+                if (AdminPlat != null)
                 {
-                    _dbContext.Empleado.Remove(empleado);
+                    _dbContext.AdminPlat.Remove(AdminPlat);
                     _dbContext.SaveChanges();
-                    return empleado;
+                    return AdminPlat;
                 }
                 else
                 {
@@ -94,9 +94,9 @@ namespace BarberiAppPersona.Repository
             }
         }
 
-        public bool ValidarEmpleado(int id)
+        public bool ValidarAdminPlat(int id)
         {
-            return _dbContext.Empleado.Any(e => e.EmpleadoID == id);
+            return _dbContext.AdminPlat.Any(e => e.AdminPlatID == id);
         }
     }
 }
