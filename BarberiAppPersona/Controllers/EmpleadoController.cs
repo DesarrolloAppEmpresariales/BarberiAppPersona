@@ -4,18 +4,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BarberiApp.WebApi.Controllers
+namespace BarberiAppPersona.Controllers
 {
     [Authorize]
     [Route("api/empleado")]
     [ApiController]
     public class EmpleadoController : ControllerBase
     {
-        private readonly IEmpleado _IEmpleado;
+        private readonly IEmpleado _IEmpleado; 
+        private readonly ILogger<EmpleadoController> _logger;
 
-        public EmpleadoController(IEmpleado IEmpleado)
+        public EmpleadoController(IEmpleado IEmpleado, ILogger<EmpleadoController> logger)
         {
             _IEmpleado = IEmpleado;
+            _logger = logger;
         }
         //Roles (1 'SU') (2 'Admin') (3 'Barbero') (4 'Cliente')     
         // GET: api/employee> 
@@ -23,6 +25,7 @@ namespace BarberiApp.WebApi.Controllers
         [Authorize(Roles = "1, 2")]
         public async Task<ActionResult<IEnumerable<Empleado>>> Get()
         {
+            _logger.LogWarning("Se realiza la consulta de empleados");
             return await Task.FromResult(_IEmpleado.ObtenerListaEmpleados());
         }
 
